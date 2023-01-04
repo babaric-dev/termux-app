@@ -118,7 +118,7 @@ public class TermuxFloatAppSharedPreferences extends AppSharedPreferences {
     private boolean isDesktopMode() {
         UiModeManager uiModeManager = (UiModeManager) getContext().getSystemService(Context.UI_MODE_SERVICE);
         float density = getContext().getResources().getDisplayMetrics().densityDpi;
-        return (boolean) uiModeManager.getCurrentModeType() == Configuration.UI_MODE_TYPE_DESK && density == 160;
+        return uiModeManager.getCurrentModeType() == Configuration.UI_MODE_TYPE_DESK && density == 160;
     }
 
     public int getFontSize() {
