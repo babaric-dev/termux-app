@@ -155,20 +155,20 @@ public class TermuxAppSharedPreferences extends AppSharedPreferences {
     }
 
 
-    private boolean isDesktopMode(Context context) {
-        UiModeManager uiModeManager = (UiModeManager) context.getSystemService(Context.UI_MODE_SERVICE);
+    private boolean isDesktopMode() {
+        UiModeManager uiModeManager = (UiModeManager) getSystemService(Context.UI_MODE_SERVICE);
         //Density for mdpi is 160
         float density = context.getResources().getDisplayMetrics().densityDpi;
         return (boolean) uiModeManager.getCurrentModeType() == Configuration.UI_MODE_TYPE_DESK && density == 160;
     }
 
     public int getFontSize() {
-        int fontSize = SharedPreferenceUtils.getIntStoredAsString(mSharedPreferences, (isDesktopMode(context) ? TERMUX_APP.KEY_FONTSIZE_TABLET : TERMUX_APP.KEY_FONTSIZE), DEFAULT_FONTSIZE);
+        int fontSize = SharedPreferenceUtils.getIntStoredAsString(mSharedPreferences, (isDesktopMode() ? TERMUX_APP.KEY_FONTSIZE_TABLET : TERMUX_APP.KEY_FONTSIZE), DEFAULT_FONTSIZE);
         return DataUtils.clamp(fontSize, MIN_FONTSIZE, MAX_FONTSIZE);
     }
 
     public void setFontSize(int value) {
-        SharedPreferenceUtils.setIntStoredAsString(mSharedPreferences, (isDesktopMode(context) ? TERMUX_APP.KEY_FONTSIZE_TABLET : TERMUX_APP.KEY_FONTSIZE), value, false);
+        SharedPreferenceUtils.setIntStoredAsString(mSharedPreferences, (isDesktopMode() ? TERMUX_APP.KEY_FONTSIZE_TABLET : TERMUX_APP.KEY_FONTSIZE), value, false);
     }
 
     public void changeFontSize(boolean increase) {
