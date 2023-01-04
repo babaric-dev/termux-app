@@ -156,8 +156,8 @@ public class TermuxAppSharedPreferences extends AppSharedPreferences {
 
 
     private boolean isDesktopMode() {
-        UiModeManager uiModeManager = (UiModeManager) getSystemService(Context.UI_MODE_SERVICE);
-        float density = getResources().getDisplayMetrics().densityDpi;
+        UiModeManager uiModeManager = (UiModeManager) getContext().getSystemService(Context.UI_MODE_SERVICE);
+        float density = getContext().getResources().getDisplayMetrics().densityDpi;
         return (boolean) uiModeManager.getCurrentModeType() == Configuration.UI_MODE_TYPE_DESK && density == 160;
     }
 
