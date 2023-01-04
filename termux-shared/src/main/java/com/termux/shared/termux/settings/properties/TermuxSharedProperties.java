@@ -2,6 +2,7 @@ package com.termux.shared.termux.settings.properties;
 
 import android.content.Context;
 
+import android.content.res.Configuration;
 import android.app.UiModeManager;
 
 import androidx.annotation.NonNull;
