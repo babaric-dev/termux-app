@@ -121,7 +121,7 @@ public class TermuxFloatAppSharedPreferences extends AppSharedPreferences {
     }
 
     public void setFontSize(int value) {
-        SharedPreferenceUtils.setIntStoredAsString(mSharedPreferences, (mProperties.isDesktopMode() ? TERMUX_FLOAT_APP.KEY_FONTSIZE_TABLET : TERMUX_FLOAT_APP.KEY_FONTSIZE)E, value, false);
+        SharedPreferenceUtils.setIntStoredAsString(mSharedPreferences, (mProperties.isDesktopMode() ? TERMUX_FLOAT_APP.KEY_FONTSIZE_TABLET : TERMUX_FLOAT_APP.KEY_FONTSIZE), value, false);
     }
 
     public void changeFontSize(boolean increase) {
