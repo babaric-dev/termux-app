@@ -2,9 +2,6 @@ package com.termux.shared.termux.settings.properties;
 
 import android.content.Context;
 
-import android.content.res.Configuration;
-import android.app.UiModeManager;
-
 import androidx.annotation.NonNull;
 
 import com.termux.shared.logger.Logger;
@@ -686,7 +683,6 @@ public abstract class TermuxSharedProperties {
     public boolean areVirtualVolumeKeysDisabled() {
         return (boolean) TermuxPropertyConstants.IVALUE_VOLUME_KEY_BEHAVIOUR_VOLUME.equals(getInternalPropertyValue(TermuxPropertyConstants.KEY_VOLUME_KEYS_BEHAVIOUR, true));
     }
-
 
 
 

@@ -3,6 +3,9 @@ package com.termux.shared.termux.settings.preferences;
 import android.content.Context;
 import android.util.TypedValue;
 
+import android.content.res.Configuration;
+import android.app.UiModeManager;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -160,12 +163,12 @@ public class TermuxAppSharedPreferences extends AppSharedPreferences {
     }
 
     public int getFontSize() {
-        int fontSize = SharedPreferenceUtils.getIntStoredAsString(mSharedPreferences, (isDesktopMode() ? TERMUX_APP.KEY_FONTSIZE_TABLET : TERMUX_APP.KEY_FONTSIZE), DEFAULT_FONTSIZE);
+        int fontSize = SharedPreferenceUtils.getIntStoredAsString(mSharedPreferences, (isDesktopMode(context) ? TERMUX_APP.KEY_FONTSIZE_TABLET : TERMUX_APP.KEY_FONTSIZE), DEFAULT_FONTSIZE);
         return DataUtils.clamp(fontSize, MIN_FONTSIZE, MAX_FONTSIZE);
     }
 
     public void setFontSize(int value) {
-        SharedPreferenceUtils.setIntStoredAsString(mSharedPreferences, (isDesktopMode() ? TERMUX_APP.KEY_FONTSIZE_TABLET : TERMUX_APP.KEY_FONTSIZE), value, false);
+        SharedPreferenceUtils.setIntStoredAsString(mSharedPreferences, (isDesktopMode(context) ? TERMUX_APP.KEY_FONTSIZE_TABLET : TERMUX_APP.KEY_FONTSIZE), value, false);
     }
 
     public void changeFontSize(boolean increase) {
