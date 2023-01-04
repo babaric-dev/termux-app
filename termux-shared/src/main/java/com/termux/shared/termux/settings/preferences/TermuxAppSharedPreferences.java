@@ -152,12 +152,12 @@ public class TermuxAppSharedPreferences extends AppSharedPreferences {
     }
 
     public int getFontSize() {
-        int fontSize = SharedPreferenceUtils.getIntStoredAsString(mSharedPreferences, TERMUX_APP.KEY_FONTSIZE, DEFAULT_FONTSIZE);
+        int fontSize = SharedPreferenceUtils.getIntStoredAsString(mSharedPreferences, (mProperties.isDesktopMode() ? TERMUX_APP.KEY_FONTSIZE_TABLET : TERMUX_APP.KEY_FONTSIZE), DEFAULT_FONTSIZE);
         return DataUtils.clamp(fontSize, MIN_FONTSIZE, MAX_FONTSIZE);
     }
 
     public void setFontSize(int value) {
-        SharedPreferenceUtils.setIntStoredAsString(mSharedPreferences, TERMUX_APP.KEY_FONTSIZE, value, false);
+        SharedPreferenceUtils.setIntStoredAsString(mSharedPreferences, (mProperties.isDesktopMode() ? TERMUX_APP.KEY_FONTSIZE_TABLET : TERMUX_APP.KEY_FONTSIZE), value, false);
     }
 
     public void changeFontSize(boolean increase) {

@@ -2,6 +2,8 @@ package com.termux.shared.termux.settings.properties;
 
 import android.content.Context;
 
+import android.app.UiModeManager;
+
 import androidx.annotation.NonNull;
 
 import com.termux.shared.logger.Logger;
@@ -682,6 +684,13 @@ public abstract class TermuxSharedProperties {
 
     public boolean areVirtualVolumeKeysDisabled() {
         return (boolean) TermuxPropertyConstants.IVALUE_VOLUME_KEY_BEHAVIOUR_VOLUME.equals(getInternalPropertyValue(TermuxPropertyConstants.KEY_VOLUME_KEYS_BEHAVIOUR, true));
+    }
+
+    public boolean isDesktopMode(Context context) {
+        UiModeManager uiModeManager = (UiModeManager) context.getSystemService(Context.UI_MODE_SERVICE);
+        //Density for mdpi is 160
+        float density = context.getResources().getDisplayMetrics().densityDpi;
+        return (boolean) uiModeManager.getCurrentModeType() == Configuration.UI_MODE_TYPE_DESK && density == 160;
     }
 
 

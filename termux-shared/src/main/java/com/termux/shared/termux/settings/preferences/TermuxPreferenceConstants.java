@@ -130,6 +130,10 @@ public final class TermuxPreferenceConstants {
          */
         public static final String KEY_FONTSIZE = "fontsize";
 
+        /**
+         * Defines the key fo font size of termux terminal view on tablet / DeX mode.
+         */
+        public static final String KEY_FONTSIZE_TABLET = "fontsize_tablet";
 
         /**
          * Defines the key for current termux terminal session.
@@ -248,6 +252,11 @@ public final class TermuxPreferenceConstants {
          * Defines the key for font size of termux terminal view.
          */
         public static final String KEY_FONTSIZE = "fontsize";
+
+        /**
+         * Defines the key fo font size of termux terminal view on tablet / DeX mode.
+         */
+        public static final String KEY_FONTSIZE_TABLET = "fontsize_tablet";
 
         /**
          * Defines the key for current log level.
