@@ -15,7 +15,7 @@ import com.termux.R;
 import com.termux.shared.file.filesystem.FileType;
 import com.termux.shared.file.filesystem.FileTypes;
 import com.termux.shared.file.FileUtils;
-import com.termux.shared.models.errors.Error;
+import com.termux.shared.errors.Error;
 import com.termux.shared.termux.TermuxConstants;
 
 import java.io.File;
