@@ -3,10 +3,10 @@ name: Build
 on:
   push:
     branches:
-      - mv-del-docs-tmp
+      - master
   pull_request:
     branches:
-      - mv-del-docs-tmp
+      - master
 
 jobs:
   build:
