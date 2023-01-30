@@ -73,7 +73,7 @@ public class TermuxDocumentsProvider extends DocumentsProvider {
 
         for (String rootstr : ROOTS) {
             if (!rootstr.startsWith(TermuxConstants.TERMUX_INTERNAL_PRIVATE_APP_DATA_DIR_PATH)) {
-                continue
+                continue;
             }
             File root = new File(rootstr);
             MatrixCursor.RowBuilder row = result.newRow();
