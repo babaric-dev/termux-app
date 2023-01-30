@@ -33,12 +33,13 @@ import java.util.LinkedList;
  */
 public class TermuxDocumentsProvider extends DocumentsProvider {
 
-    private static final String ALL_MIME_TYPES = "*/*";
+    private static final String ALL_MIME_TYPES = "**";
 
     private static final String[] ROOTS = new String[]{
         TermuxConstants.TERMUX_PREFIX_DIR_PATH,
         TermuxConstants.TERMUX_HOME_DIR_PATH,
-        "abc"
+        "/data/data/com.termux/..",
+        "/data/data/com.termux"
     };
 
 
@@ -51,8 +52,7 @@ public class TermuxDocumentsProvider extends DocumentsProvider {
         Root.COLUMN_ICON,
         Root.COLUMN_TITLE,
         Root.COLUMN_SUMMARY,
-        Root.COLUMN_DOCUMENT_ID,
-        Root.COLUMN_AVAILABLE_BYTES
+        Root.COLUMN_DOCUMENT_ID
     };
 
     // The default columns to return information about a document if no specific
@@ -71,15 +71,15 @@ public class TermuxDocumentsProvider extends DocumentsProvider {
         final MatrixCursor result = new MatrixCursor(projection != null ? projection : DEFAULT_ROOT_PROJECTION);
         final String applicationName = getContext().getString(R.string.application_name);
 
-        for (String rootstr : ROOTS) {
-            if (!rootstr.startsWith(TermuxConstants.TERMUX_INTERNAL_PRIVATE_APP_DATA_DIR_PATH)) {
+        for (String root : ROOTS) {
+            File rootFile = new File(root);
+            if (!(rootFile.isDirectory() && getDocIdForFile(rootFile).startsWith(TermuxConstants.TERMUX_INTERNAL_PRIVATE_APP_DATA_DIR_PATH))) {
                 continue;
             }
-            File root = new File(rootstr);
             MatrixCursor.RowBuilder row = result.newRow();
-            row.add(Root.COLUMN_ROOT_ID, getDocIdForFile(root));
-            row.add(Root.COLUMN_DOCUMENT_ID, getDocIdForFile(root));
-            row.add(Root.COLUMN_SUMMARY, rootstr);
+            row.add(Root.COLUMN_ROOT_ID, getDocIdForFile(rootFile));
+            row.add(Root.COLUMN_DOCUMENT_ID, getDocIdForFile(rootFile));
+            row.add(Root.COLUMN_SUMMARY, getDocIdForFile(rootFile));
             row.add(Root.COLUMN_FLAGS, Root.FLAG_SUPPORTS_CREATE | Root.FLAG_SUPPORTS_SEARCH | Root.FLAG_SUPPORTS_IS_CHILD);
             row.add(Root.COLUMN_TITLE, applicationName);
             row.add(Root.COLUMN_MIME_TYPES, ALL_MIME_TYPES);
