@@ -35,7 +35,7 @@ public class TermuxDocumentsProvider extends DocumentsProvider {
 
     private static final String ALL_MIME_TYPES = "*/*";
 
-    private static final String[] ROOTS = [TermuxConstants.TERMUX_PREFIX_DIR_PATH, TERMUX_HOME_DIR_PATH];
+    private static final List<String> ROOTS = Arrays.asList(TermuxConstants.TERMUX_PREFIX_DIR_PATH, TermuxConstants.TERMUX_HOME_DIR_PATH);
 
 
     // The default columns to return information about a root if no specific
