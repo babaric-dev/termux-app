@@ -72,7 +72,7 @@ public class TermuxDocumentsProvider extends DocumentsProvider {
         final String applicationName = getContext().getString(R.string.application_name);
 
         for (String rootstr : ROOTS) {
-            if (!rootstr.startsWith()) {
+            if (!rootstr.startsWith(TermuxConstants.TERMUX_INTERNAL_PRIVATE_APP_DATA_DIR_PATH)) {
                 continue
             }
             File root = new File(rootstr);
