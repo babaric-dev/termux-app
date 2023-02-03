@@ -384,6 +384,12 @@ public final class TermuxPropertyConstants {
 
 
 
+    /** Defines the key for directories provided by DocumentsProvider */
+    public static final String KEY_SAF_DIRS = "saf-dirs";
+    public static final String DEFAULT_IVALUE_SAF_DIRS = "[['" + TermuxConstants.TERMUX_HOME_DIR_PATH + "',{title:'Termux'}]]"
+
+
+
 
 
     /** Defines the set for keys loaded by termux

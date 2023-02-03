@@ -13,12 +13,17 @@ import android.webkit.MimeTypeMap;
 
 import com.termux.R;
 import com.termux.shared.termux.TermuxConstants;
+import com.termux.app.TermuxActivity;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.LinkedList;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONException;
 
 /**
  * A document provider for the Storage Access Framework which exposes the files in the
@@ -33,15 +38,9 @@ import java.util.LinkedList;
  */
 public class TermuxDocumentsProvider extends DocumentsProvider {
 
-    private static final String ALL_MIME_TYPES = "**";
+    private static final String ALL_MIME_TYPES = "*/*";
 
-    private static final String[] ROOTS = new String[]{
-        TermuxConstants.TERMUX_PREFIX_DIR_PATH,
-        TermuxConstants.TERMUX_HOME_DIR_PATH,
-        "/data/data/com.termux/..",
-        "/data/data/com.termux"
-    };
-
+    private final TermuxActivity mActivity = (TermuxActivity) getActivity();
 
     // The default columns to return information about a root if no specific
     // columns are requested in a query.
@@ -68,20 +67,59 @@ public class TermuxDocumentsProvider extends DocumentsProvider {
 
     @Override
     public Cursor queryRoots(String[] projection) {
+        private Object[][] parseSafJsonString(String safString) throws JSONException {
+            JSONArray arr = new JSONArray(safDirs);
+            Object matrix[][] = new Object[arr.length()][2];
+            for (int i = 0; i < arr.length(); i++) {
+                JSONArray line = arr.getJSONArray(i);
+                if (arr.length() > 2) {
+                    throw new JSONException("One or more items in " +);
+                }
+                String matrix[i][0] = line.get(0).toString();
+                if (arr.length() == 2) {
+                    JSONObject matrix[i][1] = line.getJSONObject(1);
+                } else {
+                    JSONObject matrix[i][1] = nee JSONObject();
+                }
+            }
+        }
+
+        Obhect[][] ROOTS
+        try {
+            ROOTS = parseSafJsonString((String) mActivity.getProperties().getInternalPropertyValue(TermuxPropertyConstants.KEY_SAF_DIRS, true));
+        } catch (JSONException e) {
+            Logger.showToast(mActivity, "Could not load and set the \"" + TermuxPropertyConstants.KEY_SAF_DIRS + "\" property from the properties file: " + e.toString(), true);
+            Logger.logStackTraceWithMessage(LOG_TAG, "Could not load and set the \"" + TermuxPropertyConstants.KEY_SAF_DIRS + "\" property from the properties file: ", e);
+
+            try {
+                ROOTS = parseSafJsonString(TermuxConstants.DEFAULT_IVALUE_SAF_DIRS);
+            } catch (JSONException e) {
+                Logger.showToast(mActivity, "Cannot get default SAF directories", true);
+                Logger.logStackTraceWithMessage(LOG_TAG, "Cannot get default SAF directories: ", e);
+            }
+        }
+
+        private String getSafOptionKey(JSONObject jobject, String key, String fallback) {
+            return jobject.isNull(key) ? fallback : jobject.get(key).toString();
+        }
+
         final MatrixCursor result = new MatrixCursor(projection != null ? projection : DEFAULT_ROOT_PROJECTION);
         final String applicationName = getContext().getString(R.string.application_name);
 
-        for (String root : ROOTS) {
+        for (Object[] rootPair : ROOTS) {
+            String root = rootPair[0];
+            JSONObject safOptions = rootPair[1];
             File rootFile = new File(root);
             if (!(rootFile.isDirectory() && getDocIdForFile(rootFile).startsWith(TermuxConstants.TERMUX_INTERNAL_PRIVATE_APP_DATA_DIR_PATH))) {
                 continue;
             }
+
             MatrixCursor.RowBuilder row = result.newRow();
             row.add(Root.COLUMN_ROOT_ID, getDocIdForFile(rootFile));
             row.add(Root.COLUMN_DOCUMENT_ID, getDocIdForFile(rootFile));
             row.add(Root.COLUMN_SUMMARY, getDocIdForFile(rootFile));
             row.add(Root.COLUMN_FLAGS, Root.FLAG_SUPPORTS_CREATE | Root.FLAG_SUPPORTS_SEARCH | Root.FLAG_SUPPORTS_IS_CHILD);
-            row.add(Root.COLUMN_TITLE, applicationName);
+            row.add(Root.COLUMN_TITLE, getSafOptionKey(safOptions, "title", applicationName));
             row.add(Root.COLUMN_MIME_TYPES, ALL_MIME_TYPES);
             row.add(Root.COLUMN_ICON, R.mipmap.ic_launcher);
         }

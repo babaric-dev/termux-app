@@ -300,6 +300,8 @@ public abstract class TermuxSharedProperties {
                 return (String) getSoftKeyboardToggleBehaviourInternalPropertyValueFromValue(value);
             case TermuxPropertyConstants.KEY_VOLUME_KEYS_BEHAVIOUR:
                 return (String) getVolumeKeysBehaviourInternalPropertyValueFromValue(value);
+            case TermuxPropertyConstants.KEY_SAF_DIRS:
+                return (String) getSafDirsInternalPropertyValueFromValue(value);
 
             default:
                 // default false boolean behaviour
@@ -568,6 +570,16 @@ public abstract class TermuxSharedProperties {
      */
     public static String getVolumeKeysBehaviourInternalPropertyValueFromValue(String value) {
         return (String) SharedProperties.getDefaultIfNotInMap(TermuxPropertyConstants.KEY_VOLUME_KEYS_BEHAVIOUR, TermuxPropertyConstants.MAP_VOLUME_KEYS_BEHAVIOUR, SharedProperties.toLowerCase(value), TermuxPropertyConstants.DEFAULT_IVALUE_VOLUME_KEYS_BEHAVIOUR, true, LOG_TAG);
+    }
+
+    /**
+     * Returns the value itself if it is not {@code null}, otherwise returns {@link TermuxPropertyConstants#DEFAULT_IVALUE_SAF_DIRS}.
+     *
+     * @param value {@link String} value to convert.
+     * @return Returns the internal value for value.
+     */
+    public static String getSafDirsInternalPropertyValueFromValue(String value) {
+        return SharedProperties.getDefaultIfNullOrEmpty(value, TermuxPropertyConstants.DEFAULT_IVALUE_SAF_DIRS);
     }
 
 
