@@ -84,7 +84,7 @@ public class TermuxDocumentsProvider extends DocumentsProvider {
             }
         }
 
-        Obhect[][] ROOTS
+        Object[][] ROOTS;
         try {
             ROOTS = parseSafJsonString((String) mActivity.getProperties().getInternalPropertyValue(TermuxPropertyConstants.KEY_SAF_DIRS, true));
         } catch (JSONException e) {
@@ -94,8 +94,8 @@ public class TermuxDocumentsProvider extends DocumentsProvider {
             try {
                 ROOTS = parseSafJsonString(TermuxConstants.DEFAULT_IVALUE_SAF_DIRS);
             } catch (JSONException e) {
-                Logger.showToast(mActivity, "Cannot get default SAF directories", true);
-                Logger.logStackTraceWithMessage(LOG_TAG, "Cannot get default SAF directories: ", e);
+                Logger.showToast(mActivity, "Cannot set default SAF directories", true);
+                Logger.logStackTraceWithMessage(LOG_TAG, "Cannot set default SAF directories: ", e);
             }
         }
 
