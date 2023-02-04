@@ -14,6 +14,7 @@ import android.webkit.MimeTypeMap;
 import com.termux.R;
 import com.termux.shared.termux.TermuxConstants;
 import com.termux.app.TermuxActivity;
+import com.termux.shared.logger.Logger;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -40,7 +41,7 @@ public class TermuxDocumentsProvider extends DocumentsProvider {
 
     private static final String ALL_MIME_TYPES = "*/*";
 
-    private final TermuxActivity mActivity = (TermuxActivity) getActivity();
+    private static final String LOG_TAG = "TermuxDocumentsPrivider"
 
     // The default columns to return information about a root if no specific
     // columns are requested in a query.
@@ -67,6 +68,7 @@ public class TermuxDocumentsProvider extends DocumentsProvider {
 
     @Override
     public Cursor queryRoots(String[] projection) {
+        TermuxActivity mActivity = (TermuxActivity) getActivity();
         Object[][] ROOTS;
         try {
             ROOTS = parseSafJsonString((String) mActivity.getProperties().getInternalPropertyValue(TermuxPropertyConstants.KEY_SAF_DIRS, true));
@@ -87,7 +89,7 @@ public class TermuxDocumentsProvider extends DocumentsProvider {
 
         for (Object[] rootPair : ROOTS) {
             String root = (String) rootPair[0];
-            JSONObject safOptions = (JSONException) rootPair[1];
+            JSONObject safOptions = (JSONObject) rootPair[1];
             File rootFile = new File(root);
             if (!(rootFile.isDirectory() && getDocIdForFile(rootFile).startsWith(TermuxConstants.TERMUX_INTERNAL_PRIVATE_APP_DATA_DIR_PATH))) {
                 continue;
