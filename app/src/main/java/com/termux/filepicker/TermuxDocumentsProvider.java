@@ -41,7 +41,7 @@ public class TermuxDocumentsProvider extends DocumentsProvider {
 
     private static final String ALL_MIME_TYPES = "*/*";
 
-    private static final String LOG_TAG = "TermuxDocumentsPrivider"
+    private static final String LOG_TAG = "TermuxDocumentsProvider";
 
     // The default columns to return information about a root if no specific
     // columns are requested in a query.
@@ -78,9 +78,9 @@ public class TermuxDocumentsProvider extends DocumentsProvider {
 
             try {
                 ROOTS = parseSafJsonString(TermuxConstants.DEFAULT_IVALUE_SAF_DIRS);
-            } catch (JSONException e) {
+            } catch (JSONException e2) {
                 Logger.showToast(mActivity, "Cannot set default SAF directories", true);
-                Logger.logStackTraceWithMessage(LOG_TAG, "Cannot set default SAF directories: ", e);
+                Logger.logStackTraceWithMessage(LOG_TAG, "Cannot set default SAF directories: ", e2);
             }
         }
 
