@@ -73,7 +73,7 @@ public class TermuxDocumentsProvider extends DocumentsProvider {
             for (int i = 0; i < arr.length(); i++) {
                 JSONArray line = arr.getJSONArray(i);
                 if (arr.length() > 2) {
-                    throw new JSONException("One or more items in " +);
+                    throw new JSONException("Some items in SAF string have more than 2 items.");
                 }
                 String matrix[i][0] = line.get(0).toString();
                 if (arr.length() == 2) {
