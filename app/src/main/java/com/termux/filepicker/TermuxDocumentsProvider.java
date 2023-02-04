@@ -67,22 +67,6 @@ public class TermuxDocumentsProvider extends DocumentsProvider {
 
     @Override
     public Cursor queryRoots(String[] projection) {
-        public Object[][] parseSafJsonString(String safString) throws JSONException {
-            JSONArray arr = new JSONArray(safDirs);
-            Object matrix[][] = new Object[arr.length()][2];
-            for (int i = 0; i < arr.length(); i++) {
-                JSONArray line = arr.getJSONArray(i);
-                if (arr.length() > 2) {
-                    throw new JSONException("Some items in SAF string have more than 2 items.");
-                }
-                String matrix[i][0] = line.get(0).toString();
-                if (arr.length() == 2) {
-                    JSONObject matrix[i][1] = line.getJSONObject(1);
-                } else {
-                    JSONObject matrix[i][1] = nee JSONObject();
-                }
-            }
-        }
 
         Object[][] ROOTS;
         try {
@@ -97,10 +81,6 @@ public class TermuxDocumentsProvider extends DocumentsProvider {
                 Logger.showToast(mActivity, "Cannot set default SAF directories", true);
                 Logger.logStackTraceWithMessage(LOG_TAG, "Cannot set default SAF directories: ", e);
             }
-        }
-
-        private String getSafOptionKey(JSONObject jobject, String key, String fallback) {
-            return jobject.isNull(key) ? fallback : jobject.get(key).toString();
         }
 
         final MatrixCursor result = new MatrixCursor(projection != null ? projection : DEFAULT_ROOT_PROJECTION);
@@ -273,6 +253,28 @@ public class TermuxDocumentsProvider extends DocumentsProvider {
             }
             return "application/octet-stream";
         }
+    }
+
+    private static Object[][] parseSafJsonString(String safString) throws JSONException {
+        JSONArray arr = new JSONArray(safDirs);
+        Object[][] matrix = new Object[arr.length()][2];
+        for (int i = 0; i < arr.length(); i++) {
+            JSONArray line = arr.getJSONArray(i);
+            if (line.length() > 2) {
+                throw new JSONException("Some items in SAF string have more than 2 items.");
+            }
+            matrix[i][0] = line.get(0).toString();
+            if (line.length() == 2) {
+                matrix[i][1] = line.getJSONObject(1);
+            } else {
+                matrix[i][1] = new JSONObject();
+            }
+        }
+        return matrix;
+    }
+
+    private static String getSafOptionKey(JSONObject jobject, String key, String fallback) {
+        return jobject.isNull(key) ? fallback : jobject.get(key).toString();
     }
 
     /**
