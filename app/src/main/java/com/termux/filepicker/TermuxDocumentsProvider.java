@@ -67,7 +67,7 @@ public class TermuxDocumentsProvider extends DocumentsProvider {
 
     @Override
     public Cursor queryRoots(String[] projection) {
-        private Object[][] parseSafJsonString(String safString) {
+        public Object[][] parseSafJsonString(String safString) throws JSONException {
             JSONArray arr = new JSONArray(safDirs);
             Object matrix[][] = new Object[arr.length()][2];
             for (int i = 0; i < arr.length(); i++) {
