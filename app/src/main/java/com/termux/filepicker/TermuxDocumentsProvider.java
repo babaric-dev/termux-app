@@ -13,6 +13,7 @@ import android.webkit.MimeTypeMap;
 
 import com.termux.R;
 import com.termux.shared.termux.TermuxConstants;
+import com.termux.shared.termux.settings.properties.TermuxPropertyConstants;
 import com.termux.app.TermuxActivity;
 import com.termux.shared.logger.Logger;
 
@@ -77,7 +78,7 @@ public class TermuxDocumentsProvider extends DocumentsProvider {
             Logger.logStackTraceWithMessage(LOG_TAG, "Could not load and set the \"" + TermuxPropertyConstants.KEY_SAF_DIRS + "\" property from the properties file: ", e);
 
             try {
-                ROOTS = parseSafJsonString(TermuxConstants.DEFAULT_IVALUE_SAF_DIRS);
+                ROOTS = parseSafJsonString(TermuxPropertyConstants.DEFAULT_IVALUE_SAF_DIRS);
             } catch (JSONException e2) {
                 Logger.showToast(mActivity, "Cannot set default SAF directories", true);
                 Logger.logStackTraceWithMessage(LOG_TAG, "Cannot set default SAF directories: ", e2);
@@ -257,10 +258,10 @@ public class TermuxDocumentsProvider extends DocumentsProvider {
     }
 
     private static Object[][] parseSafJsonString(String safString) throws JSONException {
-        JSONArray arr = new JSONArray(safDirs);
-        Object[][] matrix = new Object[arr.length()][2];
-        for (int i = 0; i < arr.length(); i++) {
-            JSONArray line = arr.getJSONArray(i);
+        JSONArray safDirs = new JSONArray(safString);
+        Object[][] matrix = new Object[safDirs.length()][2];
+        for (int i = 0; i < safDirs.length(); i++) {
+            JSONArray line = safDirs.getJSONArray(i);
             if (line.length() > 2) {
                 throw new JSONException("Some items in SAF string have more than 2 items.");
             }
