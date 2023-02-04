@@ -67,7 +67,6 @@ public class TermuxDocumentsProvider extends DocumentsProvider {
 
     @Override
     public Cursor queryRoots(String[] projection) {
-
         Object[][] ROOTS;
         try {
             ROOTS = parseSafJsonString((String) mActivity.getProperties().getInternalPropertyValue(TermuxPropertyConstants.KEY_SAF_DIRS, true));
@@ -87,8 +86,8 @@ public class TermuxDocumentsProvider extends DocumentsProvider {
         final String applicationName = getContext().getString(R.string.application_name);
 
         for (Object[] rootPair : ROOTS) {
-            String root = rootPair[0];
-            JSONObject safOptions = rootPair[1];
+            String root = (String) rootPair[0];
+            JSONObject safOptions = (JSONException) rootPair[1];
             File rootFile = new File(root);
             if (!(rootFile.isDirectory() && getDocIdForFile(rootFile).startsWith(TermuxConstants.TERMUX_INTERNAL_PRIVATE_APP_DATA_DIR_PATH))) {
                 continue;
